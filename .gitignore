@@ -1,0 +1,4 @@
+/node_modules
+/coverage
+/.unotes
+/.nyc_output

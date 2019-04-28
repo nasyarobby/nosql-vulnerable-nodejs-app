@@ -1,22 +1,32 @@
 h1 Search User Invoice
 h2 Hello, #{user.name}
-form(method="GET" action="/protected/searchinvoice")
-    div
-        label Show invoice with amount at least $: 
-        input(name="minimum" value=minimumAmount)
-    div
-        input(type="submit" value="search")
-
-table(border=1)
-    thead
-        tr
-            th No
-            th Date
-            th Amount
-    tbody
-        each invoice in invoices
-            tr
-                td #{invoice.number}
-                td #{invoice.payee}
-                td #{invoice.date}
-                td $#{invoice.amount}
+div
+    p
+        | [
+        a(href="/logout") Logout
+        | ]
+div
+    form(method="GET" action="/protected/searchinvoice")
+        div
+            label Show invoice with amount at least $: 
+            input(name="minimum" value=minimumAmount)
+        div
+            input(type="submit" value="search")
+    
+    if invoices.length >0
+        table(border=1)
+            thead
+                tr
+                    th No
+                    th Date
+                    th Amount
+            tbody
+                each invoice in invoices
+                    tr
+                        td #{invoice.number}
+                        td #{invoice.payee}
+                        td #{invoice.date}
+                        td $#{invoice.amount}
+    else
+        div
+            p No user invoices found.

@@ -41,7 +41,7 @@ var isAuthenticated = function (req, res, next) {
 }
 
 app.get('/', (req, res) => {
-    res.send("App is working");
+    res.render("home");
 });
 
 app.all('/logout', (req, res) => {

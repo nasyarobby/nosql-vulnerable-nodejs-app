@@ -88,7 +88,12 @@ app.post('/login', (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
         if (err) throw err;
 
-        db.db("dvna").collection("users").findOne({ username: req.body.username, password: req.body.password }, (err, data) => {
+        // fix: cast the body request input to intended type (in this case String)
+        let username = String(req.body.username);
+        let password = String(req.body.password);
+        
+        // fix: using a proper logical operator (eg. $eq, $in) for checking equality.
+        db.db("dvna").collection("users").findOne({ username: {$eq:username}, password: {$eq: password} }, (err, data) => {
             if (err) {
                 res.send(err);
             }
@@ -106,8 +111,11 @@ app.get('/protected/searchinvoice',
     isAuthenticated,
     (req, res) => {
         MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-            let minimumAmount = req.query.minimum || 0;
-            db.db("dvna").collection("invoices").find({$where: "return this.userId == '"+req.user._id+"' && this.amount > "+minimumAmount}).toArray((err, data) => {
+            // fix: cast the querystring to intended type (in this case Number)
+            let minimumAmount = Number(req.query.minimum) || 0;
+
+            // fix: using a proper logical operator (eg. $eq, $in) to check equality
+            db.db("dvna").collection("invoices").find({userId: {$eq: req.user._id},amount: {$gte: minimumAmount}}).toArray((err, data) => {
                 let userInvoices = data;
                 res.render('searchInvoice', {user: req.user, invoices: userInvoices, minimumAmount: minimumAmount});
             });

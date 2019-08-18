@@ -1,7 +1,7 @@
 # nosql-vulnerable-nodejs-app
 Minimalist NodeJS app with NoSQL injection attack vulnerabilities.
 
-Fixes ```branch``` on this repository contains the source code with fixes for the vulnerabilities.
+The branch ```fixes``` on this repository contains the source code with fixes for the vulnerabilities.
 
 Please make sure that NodeJS and MongoDB are installed in order to deploy the vulnerable app.
 
